@@ -93,6 +93,24 @@ rules:
     scope: request
     engine: dfa
     sensitive: false
+  - name: QueryDos
+    loaded: true
+    f_regex: ((start[_]{0,1}(time|Time))|(end[_]{0,1}(time|Time))|(page[_]{0,1}(Size|size))|(start[_]{0,1}(Date|date))|(end[_]{0,1}(Date|date))|((date|Date)=))
+    s_regex: ''
+    format: '{0}'
+    color: blue
+    scope: request
+    engine: dfa
+    sensitive: true
+  - name: ImageDos
+    loaded: true
+    f_regex: ((width=)|(height=)|((&|?)h=)|((&|?)w=))
+    s_regex: ''
+    format: '{0}'
+    color: green
+    scope: request
+    engine: dfa
+    sensitive: true
 - group: Basic Information
   rule:
   - name: Email
@@ -161,7 +179,7 @@ rules:
     engine: nfa
     sensitive: true
   - name: Password Field
-    loaded: false
+    loaded: true
     f_regex: ((|'|")(|[\w]{1,10})([p](ass|wd|asswd|assword))(|[\w]{1,10})(|'|")(:|=)(
       |)('|")(.*?)('|")(|,))
     s_regex: ''
@@ -219,11 +237,11 @@ rules:
     sensitive: false
   - name: SsrfParmaterOrUrlRedirect
     loaded: true
-    f_regex: ((uri=)|(url=)|(target=))
+    f_regex: ((uri=http)|(url=http)|(target=http)|(picUrl=http)|(imageUrl=http))
     s_regex: ''
     format: '{0}'
     color: pink
-    scope: any
+    scope: request
     engine: nfa
     sensitive: true
   - name: 地图api参数
@@ -241,6 +259,24 @@ rules:
     s_regex: ''
     format: '{0}'
     color: green
+    scope: request
+    engine: nfa
+    sensitive: true
+  - name: 地图api
+    loaded: true
+    f_regex: ((key=|ak=)|(map\.))
+    s_regex: ''
+    format: '{0}'
+    color: gray
+    scope: any
+    engine: dfa
+    sensitive: false
+  - name: 腾讯地图KEY
+    loaded: true
+    f_regex: ([\w]{5}-[\w]{5}-[\w]{5}-[\w]{5}-[\w]{5}-[\w]{5})
+    s_regex: ''
+    format: '{0}'
+    color: gray
     scope: any
     engine: nfa
     sensitive: true
@@ -258,7 +294,7 @@ rules:
 - group: Other
   rule:
   - name: Linkfinder
-    loaded: false
+    loaded: true
     f_regex: (?:"|')(((?:[a-zA-Z]{1,10}://|//)[^"'/]{1,}\.[a-zA-Z]{2,}[^"']{0,})|((?:/|\.\./|\./)[^"'><,;|*()(%%$^/\\\[\]][^"'><,;|()]{1,})|([a-zA-Z0-9_\-/]{1,}/[a-zA-Z0-9_\-/]{1,}\.(?:[a-zA-Z]{1,4}|action)(?:[\?|#][^"|']{0,}|))|([a-zA-Z0-9_\-/]{1,}/[a-zA-Z0-9_\-/]{3,}(?:[\?|#][^"|']{0,}|))|([a-zA-Z0-9_\-]{1,}\.(?:\w)(?:[\?|#][^"|']{0,}|)))(?:"|')
     s_regex: ''
     format: '{0}'
