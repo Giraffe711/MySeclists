@@ -243,7 +243,7 @@ rules:
     color: pink
     scope: request
     engine: nfa
-    sensitive: true
+    sensitive: false
   - name: 地图api参数
     loaded: true
     f_regex: (jscode=)
