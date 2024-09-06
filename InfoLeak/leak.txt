@@ -1,0 +1,8 @@
+/uc_server/data/config.inc.php.bak
+/.git/config
+/config.inc.php.bak
+/config.php.bak
+/config/config.php.bak
+/config//config.inc.php.bak
+/ansible/cmdapi/
+/ansible
