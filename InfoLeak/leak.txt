@@ -9,3 +9,4 @@
 /swag/prometheus
 /metric
 /metrics
+/swagger-ui/index.html
