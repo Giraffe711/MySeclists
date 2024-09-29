@@ -98,7 +98,7 @@ rules:
     f_regex: ((start[_]{0,1}(time|Time))|(end[_]{0,1}(time|Time))|(page[_]{0,1}(Size|size))|(start[_]{0,1}(Date|date))|(end[_]{0,1}(Date|date))|((date|Date)=))
     s_regex: ''
     format: '{0}'
-    color: blue
+    color: green
     scope: request
     engine: dfa
     sensitive: true
@@ -114,7 +114,7 @@ rules:
 - group: Basic Information
   rule:
   - name: Email
-    loaded: false
+    loaded: true
     f_regex: (([a-z0-9]+[_|\.])*[a-z0-9]+@([a-z0-9]+[-|_|\.])*[a-z0-9]+\.((?!js|css|jpg|jpeg|png|ico)[a-z]{2,5}))
     s_regex: ''
     format: '{0}'
@@ -123,7 +123,7 @@ rules:
     engine: nfa
     sensitive: false
   - name: Chinese IDCard
-    loaded: false
+    loaded: true
     f_regex: '[^0-9]((\d{8}(0\d|10|11|12)([0-2]\d|30|31)\d{3}$)|(\d{6}(18|19|20)\d{2}(0[1-9]|10|11|12)([0-2]\d|30|31)\d{3}(\d|X|x)))[^0-9]'
     s_regex: ''
     format: '{0}'
@@ -132,7 +132,7 @@ rules:
     engine: nfa
     sensitive: true
   - name: Chinese Mobile Number
-    loaded: false
+    loaded: true
     f_regex: '[^\w]((?:(?:\+|00)86)?1(?:(?:3[\d])|(?:4[5-79])|(?:5[0-35-9])|(?:6[5-7])|(?:7[0-8])|(?:8[\d])|(?:9[189]))\d{8})[^\w]'
     s_regex: ''
     format: '{0}'
@@ -158,6 +158,15 @@ rules:
     scope: response
     engine: nfa
     sensitive: true
+  - name: Uid
+    loaded: true
+    f_regex: uid":"(\w+)"
+    s_regex: ''
+    format: '{0}'
+    color: yellow
+    scope: any
+    engine: nfa
+    sensitive: false
 - group: Sensitive Information
   rule:
   - name: Cloud Key
@@ -179,7 +188,7 @@ rules:
     engine: nfa
     sensitive: true
   - name: Password Field
-    loaded: true
+    loaded: false
     f_regex: ((|'|")(|[\w]{1,10})([p](ass|wd|asswd|assword))(|[\w]{1,10})(|'|")(:|=)(
       |)('|")(.*?)('|")(|,))
     s_regex: ''
@@ -389,10 +398,19 @@ rules:
     scope: any
     engine: nfa
     sensitive: false
+  - name: '订单类型参数 '
+    loaded: true
+    f_regex: (orderType=\w+)|("orderType"\:\".*?\")
+    s_regex: ''
+    format: '{0}'
+    color: yellow
+    scope: any
+    engine: nfa
+    sensitive: false
 - group: Other
   rule:
   - name: Linkfinder
-    loaded: true
+    loaded: false
     f_regex: (?:"|')(((?:[a-zA-Z]{1,10}://|//)[^"'/]{1,}\.[a-zA-Z]{2,}[^"']{0,})|((?:/|\.\./|\./)[^"'><,;|*()(%%$^/\\\[\]][^"'><,;|()]{1,})|([a-zA-Z0-9_\-/]{1,}/[a-zA-Z0-9_\-/]{1,}\.(?:[a-zA-Z]{1,4}|action)(?:[\?|#][^"|']{0,}|))|([a-zA-Z0-9_\-/]{1,}/[a-zA-Z0-9_\-/]{3,}(?:[\?|#][^"|']{0,}|))|([a-zA-Z0-9_\-]{1,}\.(?:\w)(?:[\?|#][^"|']{0,}|)))(?:"|')
     s_regex: ''
     format: '{0}'
