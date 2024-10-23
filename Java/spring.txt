@@ -124,6 +124,7 @@ mappings
 monitor
 nacos
 prod-api/actuator
+prod-api/prometheus
 prometheus
 portal/conf/config.properties
 portal/env/

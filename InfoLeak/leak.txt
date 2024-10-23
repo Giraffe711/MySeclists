@@ -10,3 +10,5 @@
 /metric
 /metrics
 /swagger-ui/index.html
+/web/viewer.html
+/trade/pdf.js/web/viewer.html
