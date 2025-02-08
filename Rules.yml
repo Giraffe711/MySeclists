@@ -446,8 +446,8 @@ rules:
 - group: Other
   rule:
   - name: Linkfinder
-    loaded: false
-    f_regex: (?:"|')(((?:[a-zA-Z]{1,10}://|//)[^"'/]{1,}\.[a-zA-Z]{2,}[^"']{0,})|((?:/|\.\./|\./)[^"'><,;|*()(%%$^/\\\[\]][^"'><,;|()]{1,})|([a-zA-Z0-9_\-/]{1,}/[a-zA-Z0-9_\-/]{1,}\.(?:[a-zA-Z]{1,4}|action)(?:[\?|#][^"|']{0,}|))|([a-zA-Z0-9_\-/]{1,}/[a-zA-Z0-9_\-/]{3,}(?:[\?|#][^"|']{0,}|))|([a-zA-Z0-9_\-]{1,}\.(?:\w)(?:[\?|#][^"|']{0,}|)))(?:"|')
+    loaded: true
+    f_regex: (?:"|')((?:(?:[a-zA-Z]{1,10}://|//)[^"'/]{1,}\.[a-zA-Z]{2,}[^"']{0,})|(?:(?:(?:/|\.\./|\./)?[^"'><,;|*()(%%$^/\\\[\]][^"'><,;|()]{1,}\.[a-zA-Z]{1,4})|(?:(?:/|\.\./|\./)?[^"'><,;|*()(%%$^/\\\[\]][^"'><,;|()]{1,}/[^"'><,;|()]{1,}(?:\.[a-zA-Z]{1,4}|action)?)))(?:[\?|#][^"|']{0,})?(?:"|')
     s_regex: ''
     format: '{0}'
     color: gray
@@ -517,3 +517,21 @@ rules:
     scope: any
     engine: nfa
     sensitive: true
+  - name: Request URI
+    loaded: true
+    f_regex: ' ((?!.*\.js(\?.*)?$)(.*?[^.js$])) '
+    s_regex: ''
+    format: '{0}'
+    color: gray
+    scope: request line
+    engine: nfa
+    sensitive: false
+  - name: 302 Location
+    loaded: true
+    f_regex: 'Location: (.*?)\n'
+    s_regex: ''
+    format: '{0}'
+    color: gray
+    scope: response header
+    engine: nfa
+    sensitive: false
