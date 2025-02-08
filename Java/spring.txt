@@ -1,4 +1,7 @@
 api-docs
+api-docs-json
+api-json
+-json
 actuator
 actuator/./env
 actuator/auditLog
@@ -147,6 +150,11 @@ swagger/v1/swagger.json
 swagger/v2/swagger.json
 swagger-dubbo/api-docs
 swagger-resources
+swagger-resources-ext
+swagger-resources/api-docs
+swagger-resources/v2/api-docs
+swagger-resources/v2/api-docs-ext
+swagger-resources/v3/api-docs-ext
 swagger-resources/configuration/ui
 swagger-resources/configuration/security
 swagger-ui

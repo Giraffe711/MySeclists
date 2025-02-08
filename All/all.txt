@@ -15,6 +15,7 @@ trade/pdf.js/web/viewer.html
 .gitlab-ci.yml
 defaults.env
 api-docs
+api-docs/
 actuator
 actuator/./env
 actuator/auditLog
@@ -227,3 +228,8 @@ webjars/springfox-swagger-ui/springfox.js?v=2.9.2
 webjars/springfox-swagger-ui/swagger-ui-bundle.js
 webjars/springfox-swagger-ui/swagger-ui-bundle.js?v=2.9.2
 %20/swagger-ui.html
+webroot/decision
+webroot/decision/remote/design/channel
+qrcode
+genqrcode
+generateqrcode

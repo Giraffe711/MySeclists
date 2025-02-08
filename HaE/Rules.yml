@@ -167,6 +167,15 @@ rules:
     scope: any
     engine: nfa
     sensitive: false
+  - name: userid
+    loaded: true
+    f_regex: ( \w+userid=\w+;?)
+    s_regex: ''
+    format: '{0}'
+    color: blue
+    scope: any
+    engine: nfa
+    sensitive: false
 - group: Sensitive Information
   rule:
   - name: Cloud Key
@@ -246,7 +255,7 @@ rules:
     sensitive: false
   - name: SsrfParmaterOrUrlRedirect
     loaded: true
-    f_regex: ((uri=http)|(url=http)|(target=http)|(picUrl=http)|(imageUrl=http)|(urls[]=)|(urls=))
+    f_regex: ((uri=http)|(url=http)|(target=http)|(picUrl=http)|(imageUrl=http)|(urls[]=)|(urls=)|(fileUrl=))
     s_regex: ''
     format: '{0}'
     color: pink
@@ -348,6 +357,24 @@ rules:
     s_regex: ''
     format: '{0}'
     color: red
+    scope: request
+    engine: nfa
+    sensitive: false
+  - name: pdf接口
+    loaded: true
+    f_regex: (pdfurl|((\w+)=.*?\.pdf))
+    s_regex: ''
+    format: '{0}'
+    color: pink
+    scope: request
+    engine: nfa
+    sensitive: false
+  - name: Fetch Data
+    loaded: true
+    f_regex: (\/(get|fetch)\w*\?)
+    s_regex: ''
+    format: '{0}'
+    color: yellow
     scope: any
     engine: nfa
     sensitive: false
@@ -391,11 +418,11 @@ rules:
     sensitive: true
   - name: JsonpApi
     loaded: true
-    f_regex: (\{\"respCode"\:[0-9]*,\"respData\"\:\{\".*})
+    f_regex: (\(\{.*?\}\))
     s_regex: ''
     format: '{0}'
     color: pink
-    scope: any
+    scope: response body
     engine: nfa
     sensitive: false
   - name: '订单类型参数 '
@@ -470,5 +497,14 @@ rules:
     format: '{0}'
     color: gray
     scope: response body
+    engine: nfa
+    sensitive: true
+  - name: companyName
+    loaded: true
+    f_regex: company/\w+" target="_blank"><span>(.*?)</span></a>
+    s_regex: ''
+    format: '{0}'
+    color: red
+    scope: any
     engine: nfa
     sensitive: true
