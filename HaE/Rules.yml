@@ -140,6 +140,17 @@ rules:
     scope: response body
     engine: nfa
     sensitive: false
+  - name: Mobile Number Field
+    loaded: true
+    f_regex: (((|\\)(|'|")(|[\.\w]{1,32})(mobile|phone|sjh|shoujihao|concat)(|[\.\w]{1,32})(|\\)(|'|")(
+      |)(:|[=]{1,3}|![=]{1,2}|[\)]{0,1}\.val\()( |)(|\\)('|")([^'"]+?)(|\\)('|")(|,|\)))|((|\\)('|")([^'"]+?)(|\\)('|")(|\\)(|'|")(
+      |)(:|[=]{1,3}|![=]{1,2})( |)(|[\.\w]{1,32})(mobile|phone|sjh|shoujihao|concat)(|[\.\w]{1,32})(|\\)(|'|")))
+    s_regex: ''
+    format: '{0}'
+    color: green
+    scope: response body
+    engine: nfa
+    sensitive: false
   - name: Internal IP Address
     loaded: false
     f_regex: '[^0-9]((127\.0\.0\.1)|(10\.\d{1,3}\.\d{1,3}\.\d{1,3})|(172\.((1[6-9])|(2\d)|(3[01]))\.\d{1,3}\.\d{1,3})|(192\.168\.\d{1,3}\.\d{1,3}))'
@@ -206,9 +217,10 @@ rules:
     engine: nfa
     sensitive: true
   - name: Password Field
-    loaded: false
-    f_regex: ((|'|")(|[\w]{1,10})([p](ass|wd|asswd|assword))(|[\w]{1,10})(|'|")(:|=)(
-      |)('|")(.*?)('|")(|,))
+    loaded: true
+    f_regex: (((|\\)(|'|")(|[\.\w]{1,32})([p](ass|wd|asswd|assword))(|[\.\w]{1,32})(|\\)(|'|")(
+      |)(:|[=]{1,3}|![=]{1,2}|[\)]{0,1}\.val\()( |)(|\\)('|")([^'"]+?)(|\\)('|")(|,|\)))|((|\\)('|")([^'"]+?)(|\\)('|")(|\\)(|'|")(
+      |)(:|[=]{1,3}|![=]{1,2})( |)(|[\.\w]{1,32})([p](ass|wd|asswd|assword))(|[\.\w]{1,32})(|\\)(|'|")))
     s_regex: ''
     format: '{0}'
     color: yellow
@@ -216,9 +228,10 @@ rules:
     engine: nfa
     sensitive: false
   - name: Username Field
-    loaded: false
-    f_regex: ((|'|")(|[\w]{1,10})(([u](ser|name|sername))|(account)|((((create|update)((d|r)|(by|on|at)))|(creator))))(|[\w]{1,10})(|'|")(:|=)(
-      |)('|")(.*?)('|")(|,))
+    loaded: true
+    f_regex: (((|\\)(|'|")(|[\.\w]{1,32})(([u](ser|name|sername))|(account)|((((create|update)((d|r)|(by|on|at)))|(creator))))(|[\.\w]{1,32})(|\\)(|'|")(
+      |)(:|[=]{1,3}|![=]{1,2}|[\)]{0,1}\.val\()( |)(|\\)('|")([^'"]+?)(|\\)('|")(|,|\)))|((|\\)('|")([^'"]+?)(|\\)('|")(|\\)(|'|")(
+      |)(:|[=]{1,3}|![=]{1,2})( |)(|[\.\w]{1,32})(([u](ser|name|sername))|(account)|((((create|update)((d|r)|(by|on|at)))|(creator))))(|[\.\w]{1,32})(|\\)(|'|")))
     s_regex: ''
     format: '{0}'
     color: green
@@ -253,9 +266,10 @@ rules:
     engine: nfa
     sensitive: false
   - name: Sensitive Field
-    loaded: false
-    f_regex: ((\[)?('|")?([\w]{0,10})((key)|(secret)|(token)|(config)|(auth)|(access)|(admin))([\w]{0,10})('|")?(\])?(
-      |)(:|=)( |)('|")(.*?)('|")(|,))
+    loaded: true
+    f_regex: (((|\\)(|'|")(|[\.\w]{1,32})(key|secret|token|config|auth|access|admin|ticket)(|[\.\w]{1,32})(|\\)(|'|")(
+      |)(:|[=]{1,3}|![=]{1,2}|[\)]{0,1}\.val\()( |)(|\\)('|")([^'"]+?)(|\\)('|")(|,|\)))|((|\\)('|")([^'"]+?)(|\\)('|")(|\\)(|'|")(
+      |)(:|[=]{1,3}|![=]{1,2})( |)(|[\.\w]{1,32})(key|secret|token|config|auth|access|admin|ticket)(|[\.\w]{1,32})(|\\)(|'|")))
     s_regex: ''
     format: '{0}'
     color: yellow
@@ -423,7 +437,7 @@ rules:
     scope: any
     engine: nfa
     sensitive: false
-- group: New 0
+- group: XssGroup
   rule:
   - name: New Name
     loaded: false
