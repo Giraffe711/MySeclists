@@ -176,6 +176,15 @@ rules:
     scope: any
     engine: nfa
     sensitive: false
+  - name: 车牌号
+    loaded: true
+    f_regex: ([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领]{1}[A-Z]{1}[A-Z0-9]{4}[A-Z0-9挂学警港澳]{1})
+    s_regex: ''
+    format: '{0}'
+    color: orange
+    scope: any
+    engine: nfa
+    sensitive: false
 - group: Sensitive Information
   rule:
   - name: Cloud Key
@@ -255,7 +264,7 @@ rules:
     sensitive: false
   - name: SsrfParmaterOrUrlRedirect
     loaded: true
-    f_regex: ((uri=http)|(url=http)|(target=http)|(picUrl=http)|(imageUrl=http)|(urls[]=)|(urls=)|(fileUrl=))
+    f_regex: ((uri=http)|(url=http)|(target=http)|(picUrl=http)|(imageUrl=http)|(urls\[\]=http)|(urls=)|(fileUrl=)|(backUrl=))
     s_regex: ''
     format: '{0}'
     color: pink
@@ -353,7 +362,7 @@ rules:
     sensitive: true
   - name: CsrfAPI
     loaded: true
-    f_regex: (\/(del|create|add|new|change|modify|cancel)\w*\?)
+    f_regex: (\/(del|create|add|new|change|modify|cancel|set)\w*\??)
     s_regex: ''
     format: '{0}'
     color: red
@@ -375,6 +384,42 @@ rules:
     s_regex: ''
     format: '{0}'
     color: yellow
+    scope: any
+    engine: nfa
+    sensitive: false
+  - name: fileName
+    loaded: true
+    f_regex: (fileName=(.*?)|file=(.*?)|path=(.*?))
+    s_regex: ''
+    format: '{0}'
+    color: orange
+    scope: request
+    engine: nfa
+    sensitive: false
+  - name: 'xssParameter '
+    loaded: true
+    f_regex: (<script>([\s\S]*?)<\/script>)
+    s_regex: (var\s+(\w+)\s*=\s*("[^"]*"|'[^']*'|[^;]+);)
+    format: '{0}'
+    color: orange
+    scope: any
+    engine: nfa
+    sensitive: false
+  - name: 微信Session_key
+    loaded: true
+    f_regex: (session[_-]?key)
+    s_regex: ''
+    format: '{0}'
+    color: red
+    scope: any
+    engine: nfa
+    sensitive: false
+  - name: 微信IV
+    loaded: true
+    f_regex: ("iv":[ ]?".*?")
+    s_regex: ''
+    format: '{0}'
+    color: red
     scope: any
     engine: nfa
     sensitive: false
@@ -418,8 +463,8 @@ rules:
     sensitive: true
   - name: JsonpApi
     loaded: true
-    f_regex: (\(\{.*?\}\))
-    s_regex: ''
+    f_regex: Jsonp.*?(\(\{.*?\}\))
+    s_regex: '(\(\{.*?\}\)) '
     format: '{0}'
     color: pink
     scope: response body
@@ -437,8 +482,8 @@ rules:
 - group: Other
   rule:
   - name: Linkfinder
-    loaded: false
-    f_regex: (?:"|')(((?:[a-zA-Z]{1,10}://|//)[^"'/]{1,}\.[a-zA-Z]{2,}[^"']{0,})|((?:/|\.\./|\./)[^"'><,;|*()(%%$^/\\\[\]][^"'><,;|()]{1,})|([a-zA-Z0-9_\-/]{1,}/[a-zA-Z0-9_\-/]{1,}\.(?:[a-zA-Z]{1,4}|action)(?:[\?|#][^"|']{0,}|))|([a-zA-Z0-9_\-/]{1,}/[a-zA-Z0-9_\-/]{3,}(?:[\?|#][^"|']{0,}|))|([a-zA-Z0-9_\-]{1,}\.(?:\w)(?:[\?|#][^"|']{0,}|)))(?:"|')
+    loaded: true
+    f_regex: (?:"|')((?:(?:[a-zA-Z]{1,10}://|//)[^"'/]{1,}\.[a-zA-Z]{2,}[^"']{0,})|(?:(?:(?:/|\.\./|\./)?[^"'><,;|*()(%%$^/\\\[\]][^"'><,;|()]{1,}\.[a-zA-Z]{1,4})|(?:(?:/|\.\./|\./)?[^"'><,;|*()(%%$^/\\\[\]][^"'><,;|()]{1,}/[^"'><,;|()]{1,}(?:\.[a-zA-Z]{1,4}|action)?)))(?:[\?|#][^"|']{0,})?(?:"|')
     s_regex: ''
     format: '{0}'
     color: gray
@@ -508,3 +553,21 @@ rules:
     scope: any
     engine: nfa
     sensitive: true
+  - name: Request URI
+    loaded: true
+    f_regex: ' ((?!.*\.js(\?.*)?$)(.*?[^.js$])) '
+    s_regex: ''
+    format: '{0}'
+    color: gray
+    scope: request line
+    engine: nfa
+    sensitive: false
+  - name: 302 Location
+    loaded: true
+    f_regex: 'Location: (.*?)\n'
+    s_regex: ''
+    format: '{0}'
+    color: gray
+    scope: response header
+    engine: nfa
+    sensitive: false
